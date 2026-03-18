@@ -50,7 +50,19 @@ namespace Assignment02_AdvC_
 
             #endregion
 
+            #region Task 03.2 - Transform Products
 
+            Console.WriteLine("\n--- Summary List ---");
+            var summary = TransformProducts(products, ToSummary);
+            foreach (var item in summary)
+                Console.WriteLine(item);
+
+            Console.WriteLine("\n--- Price Labels ---");
+            var labels = TransformProducts(products, PriceLabel);
+            for (int i = 0; i < products.Count; i++)
+                Console.WriteLine($"{products[i].Name}: {labels[i]}");
+
+            #endregion
         }
 
         #region Task 01 - Smart Product Search
@@ -101,5 +113,29 @@ namespace Assignment02_AdvC_
             Console.WriteLine($"[{p.Category}] {p.Name} | Price: ${p.Price} | Stock: {p.Stock}");
         }
         #endregion
+
+        #region Task 03.2 - Transform Products
+
+        // Using Func<Product, string> → transforms data
+        static List<string> TransformProducts(List<Product> products, Func<Product, string> transformer)
+        {
+            List<string> result = new List<string>();
+
+            foreach (var p in products)
+                result.Add(transformer(p));
+
+            return result;
+        }
+
+        static string ToSummary(Product p)
+        {
+            return $"{p.Name} (${p.Price})";
+        }
+
+        static string PriceLabel(Product p)
+        {
+            return p.Price > 100 ? "Expensive!" : "Affordable";
+        }
+        #endregion 
     }
 }
