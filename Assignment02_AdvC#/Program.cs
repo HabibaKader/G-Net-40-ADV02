@@ -63,6 +63,15 @@ namespace Assignment02_AdvC_
                 Console.WriteLine($"{products[i].Name}: {labels[i]}");
 
             #endregion
+
+            #region Task 03.3 - Filter Products
+
+            Console.WriteLine("\n--- Low Stock Alert ---");
+            var lowStock = FilterProducts(products, LowStock);
+            foreach (var p in lowStock)
+                Console.WriteLine($"[LOW STOCK] {p.Name}: only {p.Stock} left!");
+
+            #endregion
         }
 
         #region Task 01 - Smart Product Search
@@ -136,6 +145,28 @@ namespace Assignment02_AdvC_
         {
             return p.Price > 100 ? "Expensive!" : "Affordable";
         }
-        #endregion 
+        #endregion
+
+        #region Task 03.3 - Filter Products
+
+        // Using Predicate<Product> → filtering
+        static List<Product> FilterProducts(List<Product> products, Predicate<Product> condition)
+        {
+            List<Product> result = new List<Product>();
+
+            foreach (var p in products)
+            {
+                if (condition(p))
+                    result.Add(p);
+            }
+
+            return result;
+        }
+
+        static bool LowStock(Product p)
+        {
+            return p.Stock < 20;
+        }
+        #endregion
     }
 }
