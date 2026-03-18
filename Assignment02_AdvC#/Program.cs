@@ -20,8 +20,55 @@ namespace Assignment02_AdvC_
             };
 
 
+            #region Task 01 - Smart Product Search
 
+            Console.WriteLine("--- Electronics ---");
+            var electronics = SearchProducts(products, IsElectronics);
+            PrintWithStock(electronics);
+
+            Console.WriteLine("\n--- Under $50 ---");
+            var cheap = SearchProducts(products, IsCheap);
+            PrintWithStock(cheap);
+
+            Console.WriteLine("\n--- In Stock ---");
+            var inStock = SearchProducts(products, HasStock);
+            PrintWithStock(inStock);
+
+            Console.WriteLine("\n--- Clothing under $100 ---");
+            var clothing = SearchProducts(products, ClothingUnder100);
+            PrintWithStock(clothing);
+
+            #endregion
 
         }
+
+        #region Task 01 - Smart Product Search
+
+        // Using Func<Product, bool> → flexible filter
+        static List<Product> SearchProducts(List<Product> products, Func<Product, bool> condition)
+        {
+            List<Product> result = new List<Product>();
+
+            foreach (var p in products)
+            {
+                if (condition(p))
+                    result.Add(p);
+            }
+
+            return result;
+        }
+
+        static bool IsElectronics(Product p) => p.Category == "Electronics";
+        static bool IsCheap(Product p) => p.Price < 50;
+        static bool HasStock(Product p) => p.Stock > 0;
+        static bool ClothingUnder100(Product p) => p.Category == "Clothing" && p.Price < 100;
+
+        static void PrintWithStock(List<Product> list)
+        {
+            foreach (var p in list)
+                Console.WriteLine($"{p.Name} - ${p.Price} (Stock: {p.Stock})");
+        }
+
+        #endregion
     }
 }
