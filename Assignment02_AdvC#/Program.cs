@@ -40,6 +40,17 @@ namespace Assignment02_AdvC_
 
             #endregion
 
+            #region Task 03.1 - Print Reports
+
+            Console.WriteLine("\n--- Short Report ---");
+            PrintReport(products, PrintShort);
+
+            Console.WriteLine("\n--- Detailed Report ---");
+            PrintReport(products, PrintDetailed);
+
+            #endregion
+
+
         }
 
         #region Task 01 - Smart Product Search
@@ -69,6 +80,26 @@ namespace Assignment02_AdvC_
                 Console.WriteLine($"{p.Name} - ${p.Price} (Stock: {p.Stock})");
         }
 
+        #endregion
+
+
+        #region Task 03.1 - Print Reports
+        // Using Action<Product> → performs operation (printing)
+        static void PrintReport(List<Product> products, Action<Product> printer)
+        {
+            foreach (var p in products)
+                printer(p);
+        }
+
+        static void PrintShort(Product p)
+        {
+            Console.WriteLine($"{p.Name} - ${p.Price}");
+        }
+
+        static void PrintDetailed(Product p)
+        {
+            Console.WriteLine($"[{p.Category}] {p.Name} | Price: ${p.Price} | Stock: {p.Stock}");
+        }
         #endregion
     }
 }
